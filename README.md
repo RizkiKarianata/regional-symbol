@@ -1,5 +1,7 @@
 <h1 align="center">Welcome to Regional Symbol! 👋 </h1>
 
+![Regional Symbol](https://user-images.githubusercontent.com/52366240/173226951-ee7860aa-8b35-4a5e-81c5-94194f5499f4.png)
+
 <p align="center">Regional Symbol is an application that is used to find out regional symbols, be it provinces, districts, or cities. Built using Framework7. 💖 </p>
 
 <p align="center">
