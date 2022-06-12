@@ -1,0 +1,96 @@
+<template>
+	<div class="page">
+		<div class="navbar">
+			<div class="navbar-bg"></div>
+			<div class="navbar-inner sliding">
+				<div class="title">Regional Symbol</div>
+			</div>
+		</div>
+		<div class="page-content">
+			<div class="block-title">Welcome to Regional Symbol</div>
+			<div class="card demo-card-header-pic">
+				{{#if dataImages}}
+				<div style="background-image:url('{{dataImages.url}}'); height: 175px;" class="card-header align-items-flex-end"></div>
+				{{else}}
+				{{/if}}
+			  	<div class="card-content card-content-padding">
+					{{#if dataQuotes}}
+					<p class="date">{{dataQuotes.anime}}</p>
+					<p>{{dataQuotes.quote}}<br>— {{dataQuotes.name}}</p>
+					{{else}}
+					{{/if}}
+				</div>
+			</div>
+		</div>
+	</div>
+</template>
+<script>
+	export default{
+		mounted() {
+			var $this = this;
+			var app = this.$app;
+			var $$ = this.$$;
+			var self = this;
+		},
+		on: {
+			pageInit: function () {
+				var self = this;
+				var $this = this;
+				var app = this.$app;
+				var $$ = this.$$;
+
+				var responseQuotes = new Array();
+				var responseImages = new Array();
+				var day = new Date();
+        		var weekdays = new Array(7);
+
+       			weekdays[0] = "Sunday";
+        		weekdays[1] = "Monday";
+        		weekdays[2] = "Tuesday";
+        		weekdays[3] = "Wednesday";
+        		weekdays[4] = "Thursday";
+        		weekdays[5] = "Friday";
+        		weekdays[6] = "Saturday";
+
+        		var today = weekdays[day.getDay()];
+
+				app.request.get('https://api.rei.my.id/v3/quotes', (data, status, xhr) => {
+					responseQuotes = JSON.parse(data);
+					self.$setState({
+						dataQuotes: responseQuotes
+					});
+				});
+
+				if(today == "Monday" || today == "Tuesday" || today == "Wednesday") {
+					app.request.get('https://api.rei.my.id/v3/slap', (data, status, xhr) => {
+						responseImages = JSON.parse(data);
+						self.$setState({
+							dataImages: responseImages
+						});
+					});
+				}else if(today == "Thursday" || today == "Friday") {
+					app.request.get('https://api.rei.my.id/v3/hug', (data, status, xhr) => {
+						responseImages = JSON.parse(data);
+						self.$setState({
+							dataImages: responseImages
+						});
+					});
+				}else if(today == "Saturday" || today == "Sunday") {
+					app.request.get('https://api.rei.my.id/v3/hug', (data, status, xhr) => {
+						responseImages = JSON.parse(data);
+						self.$setState({
+							dataImages: responseImages
+						});
+					});
+				}else {
+					app.request.get('https://api.rei.my.id/v3/slap', (data, status, xhr) => {
+						responseImages = JSON.parse(data);
+						self.$setState({
+							dataImages: responseImages
+						});
+					});
+				}
+			},
+		},
+	}
+</script>
